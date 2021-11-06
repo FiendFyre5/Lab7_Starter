@@ -80,12 +80,16 @@ export class Router {
         hash = "#"+page;
         //alert(hash);
       }
+      alert(window.location.href.split("#")[0]);
       //alert("window" +window.location.hash)
       if(!statePopped && window.location.hash!==hash){
+        alert(window.location.href);
         let url = new URL(window.location.origin);
-        //alert(url+hash);
+        alert(window.location.href.split("#")[0]);
+
+        //alert();
         let currState = history.state;
-        history.pushState(page,url+hash) //add current state and URL + hash to history
+        history.pushState(page,"",url+hash) //add current state and URL + hash to history
       }
       //alert(page);
       this[page]();
