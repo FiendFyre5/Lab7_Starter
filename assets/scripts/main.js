@@ -25,6 +25,13 @@ const router = new Router(function () {
    * This will only be two single lines
    * If you did this right, you should see just 1 recipe card rendered to the screen
    */
+  // recipe_card = document.querySelector("section.section--recipe-cards");
+  // recipe_card.classList.add("shown");
+  // recipe_card = document.querySelector("section.section--recipe-expand");
+  // recipe_card.classList.remove("shown");
+  document.querySelector('.section--recipe-cards').classList.add('shown');
+  document.querySelector('.section--recipe-expand').classList.remove('shown');
+  
 });
 
 window.addEventListener('DOMContentLoaded', init);
@@ -55,6 +62,7 @@ function initializeServiceWorker() {
    *  TODO - Part 2 Step 1
    *  Initialize the service worker set up in sw.js
    */
+
 }
 
 /**
@@ -119,6 +127,29 @@ function createRecipeCards() {
    * After this step you should see multiple cards rendered like the end of the last
    * lab
    */
+  for(let i = 1; i < Object.keys(recipeData).length;i++){
+    //alert(recipes[i]);
+    const recipeCard1 = document.createElement('recipe-card');
+    // Inputs the data for the card. This is just the first recipe in the recipes array,
+    // being used as the key for the recipeData object
+    recipeCard1.data = recipeData[recipes[i]];
+
+    // This gets the page name of each of the arrays - which is basically
+    // just the filename minus the .json. Since this is the first element
+    // in our recipes array, the ghostCookies URL, we will receive the .json
+    // for that ghostCookies URL since it's a key in the recipeData object, and
+    // then we'll grab the 'page-name' from it - in this case it will be 'ghostCookies'
+    let page1 = recipeData[recipes[i]]['page-name'];
+    router.addPage(page1, function() {
+      document.querySelector('.section--recipe-cards').classList.remove('shown');
+      document.querySelector('.section--recipe-expand').classList.add('shown');
+      document.querySelector('recipe-expand').data = recipeData[recipes[i]];
+    });
+    bindRecipeCard(recipeCard1, page1);
+
+    document.querySelector('.recipe-cards--wrapper').appendChild(recipeCard1);
+    //alert(recipes[i]);
+  }
 }
 
 /**
@@ -174,6 +205,13 @@ function bindEscKey() {
    * if the escape key is pressed, use your router to navigate() to the 'home'
    * page. This will let us go back to the home page from the detailed page.
    */
+  document.addEventListener('keydown', event=>{
+    if(event.key=="Escape"){
+      //do something
+      router.navigate('home');
+    }
+  });
+   //self.addEventListener('install', function (event) {
 }
 
 /**
@@ -195,4 +233,14 @@ function bindPopstate() {
    * so your navigate() function does not add your going back action to the history,
    * creating an infinite loop
    */
+  window.addEventListener('popstate',event=>{
+    alert(JSON.stringify(event.state));
+    if(event.state){
+      router.navigate(JSON.stringify(event.state),true);
+    }
+    else{
+      router.navigate('home',true);
+    }
+    
+  });
 }
