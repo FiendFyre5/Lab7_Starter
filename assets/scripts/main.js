@@ -244,9 +244,9 @@ function bindPopstate() {
    * creating an infinite loop
    */
   window.addEventListener('popstate',event=>{
-    alert(JSON.stringify(event.state));
+    //alert(JSON.stringify(event.state));
     if(event.state){
-      router.navigate(JSON.stringify(event.state),true);
+      router.navigate((event.state),true);
     }
     else{
       router.navigate('home',true);

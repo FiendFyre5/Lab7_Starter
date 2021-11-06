@@ -85,7 +85,7 @@ export class Router {
         let url = new URL(window.location.origin);
         //alert(url+hash);
         let currState = history.state;
-        history.pushState(currState,'',url+hash) //add current state and URL + hash to history
+        history.pushState(page,url+hash) //add current state and URL + hash to history
       }
       //alert(page);
       this[page]();
