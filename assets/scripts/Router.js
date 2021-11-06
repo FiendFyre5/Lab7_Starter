@@ -83,8 +83,8 @@ export class Router {
       alert(window.location.href.split("#")[0]);
       //alert("window" +window.location.hash)
       if(!statePopped && window.location.hash!==hash){
-        alert(window.location.href);
-        let url = new URL(window.location.origin);
+        //alert(window.location.href);
+        let url = new URL(window.location.href.split("#")[0]);
         alert(window.location.href.split("#")[0]);
 
         //alert();
